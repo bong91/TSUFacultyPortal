@@ -3,54 +3,44 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <!-- Page Specific CSS -->
     <link rel="stylesheet" href="http://cdn.oesmith.co.uk/morris-0.4.3.min.css"/>
-
+   <%--<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.3.0/jquery.mobile-1.3.0.min.js"></script>--%>
+    
    <script type="text/javascript">
+
        $(document).on('pageinit', function () {
-           //ChangeToClass("dashboard");
-          
            dashboardInfo();
+
        });
 
        function dashboardInfo() {
-           alert('hello');
            
            $.ajax({
-               
                type: "GET",
-               url: "dashboard.asmx/getDashboardInfo",
-               data: "{}",
-               //contentType: "application/json; charset=utf-8",
+               contentType: "application/json; charset=utf-8",
+               url: "dashboard.asmx/getDashboardInfo?facultyID='" + document.getElementById('<%= uid.ClientID%>').value + "'",
+               data: {},
                dataType: "json",
-               success: function (response) {
-
-                   var dash = response;
-                   alert(response);
-                   $('#<%= lblScheds.ClientID %>').text("12");
+               success: function (msg) {
+                   var dash = msg.d;
+                
+                   $('#<%= lblScheds.ClientID %>').text(dash.totalschedules);
                    $('#<%= lblSheets.ClientID %>').text(dash.totalunposted);
                    $('#<%= lblList.ClientID %>').text(dash.totalstudents);
-
-                   //$.each(productt, function (index, product) {
-
-                   //    $("#theList").append("<li><img src='pic/" + product.img1 + "'> <br /> " + product.name + " <br />" + product.descr + "</li>");
-                   //});
-
-                   console.log(response);
-               },
-
-               error: function (response) {
-                   $("#theList").append("<li>error<li>");
-
-                   console.log(response);
+                   $('#<%= lblName.ClientID %>').text(dash.facultyName);
                }
+
+               
            });
        }
-   </script>
+        </script>
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="row">
           <div class="col-lg-12">
-            <h1>Dashboard <small>Welcome <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label></small></h1>
+            <h1>Dashboard <small>Hello <asp:Label ID="lblName" runat="server" Text="Label"></asp:Label></small></h1>
+            <input type='hidden' id="uid" name="uid" runat='server'/>
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
             </ol>
@@ -72,7 +62,7 @@
                   <div class="col-xs-6 text-right">
                     <p class="announcement-heading">
                         <asp:Label ID="lblMsgs" runat="server" Text="0"></asp:Label></p>
-                    <p class="announcement-text">New Messages!</p>
+                    <p class="announcement-text">New Message/s!</p>
                   </div>
                 </div>
               </div>
@@ -80,7 +70,7 @@
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      New Messages
+                      New Message/s
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>
@@ -181,7 +171,7 @@
 
        <script type="text/javascript">
            ChangeToClass("dashboard");
-          // dashboardInfo();
+           dashboardInfo();
        </script>
 </asp:Content>
 

@@ -6,10 +6,14 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.Security;
 
-public partial class _Default : System.Web.UI.Page
+public partial class logout : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       uid.Value = Membership.GetUser().UserName.ToString();
+
+        FormsAuthentication.SignOut();
+        Session.Abandon();
+        Response.Redirect("login.aspx");
+        
     }
 }
