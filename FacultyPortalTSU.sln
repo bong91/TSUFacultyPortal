@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FacultyPortalTSU", ".", "{B3F577AE-A5B8-412C-BB10-BF375CC13AB9}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		Debug.AspNetCompiler.VirtualPath = "/FacultyPortalTSU"
+		Debug.AspNetCompiler.PhysicalPath = "..\FacultyPortalTSU\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\FacultyPortalTSU\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/FacultyPortalTSU"
+		Release.AspNetCompiler.PhysicalPath = "..\FacultyPortalTSU\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\FacultyPortalTSU\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "11597"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3F577AE-A5B8-412C-BB10-BF375CC13AB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3F577AE-A5B8-412C-BB10-BF375CC13AB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
