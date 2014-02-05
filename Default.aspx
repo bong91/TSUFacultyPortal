@@ -39,7 +39,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <div class="row">
           <div class="col-lg-12">
-            <h1>Dashboard <small>Hello <asp:Label ID="lblName" runat="server" Text="Label"></asp:Label></small></h1>
+            <h1>Dashboard <small>Hello <asp:Label ID="lblName" runat="server" Text="loading"></asp:Label></small></h1>
             <input type='hidden' id="uid" name="uid" runat='server'/>
             <ol class="breadcrumb">
               <li class="active"><i class="fa fa-dashboard"></i> Dashboard</li>
@@ -154,7 +154,7 @@
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-6">
-                      View Students
+                      View Students' Lists
                     </div>
                     <div class="col-xs-6 text-right">
                       <i class="fa fa-arrow-circle-right"></i>

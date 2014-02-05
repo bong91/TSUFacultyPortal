@@ -10,6 +10,16 @@ public partial class _Default : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-       uid.Value = Membership.GetUser().UserName.ToString();
+        try
+        {
+            uid.Value = Membership.GetUser().UserName.ToString();
+        }
+        catch (Exception)
+        {
+            Response.Redirect("login.aspx");
+            throw;
+
+        }
+       
     }
 }
