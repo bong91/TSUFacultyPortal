@@ -8,10 +8,7 @@
           });
 
           $(document).on('pageinit', function () {
-
               getAcademicYear();
-             
-
           });
 
           function closeClassList() {
@@ -21,17 +18,17 @@
           }
 
 
+
           function getStudents(selSched) {
               var sched = selSched;
               $("#facultyschedules").hide();
               $("#closelist").show();
               $("#studentslists").show();
+              clearTable(studentslists);
+              getClassLists(selSched);
           }
 
-          
-
           function clearTable(table) {
-
               var firstRow = table.rows[0];
               var tBody = table.tBodies[0].cloneNode(false);
               tBody.appendChild(firstRow);
@@ -41,77 +38,93 @@
           function displaySchedules(selSched) {
               var acad = selSched.replace(/_/g, ' ');
               $('#<%= selSchedule.ClientID %>').text(acad);
-
             clearTable(facultyschedules);
             getSchedules(acad);
-        }
+          }
+
+          function exportXSL() {
+              window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#lst').html()));
+              e.preventDefault();
+          }
 
         function getSchedules(selSched) {
-
             $.ajax({
-
                 type: "GET",
                 contentType: "application/json; charset=utf-8",
                 url: "ClassSchedules.asmx/getAllFacultySchedule?term='" + selSched + "'&facultyID='" + document.getElementById('<%= uid.ClientID%>').value + "'",
-
                 data: "{}",
                 dataType: "json",
                 success: function (msg) {
                     var sched = msg.d;
-
                     $.each(sched, function (index, sh) {
                         $("#facultyschedules").append("<tr><td>" + sh.subjectcode + "</td> <td>" + sh.subjecttitle + "</td> <td>" + sh.section + "</td> <td class='text-center'> <button type='button' class='btn btn-success' onClick=getStudents(" + sh.scheduleID + ") ><i class='fa fa-folder-open'></i> Open</button></td> </tr>");
                     });
-
                     console.log(msg);
                 },
 
                 error: function (msg) {
                     $("#facultyschedules").append("<tr> <td>error</td> <td>error</td> <td>error</td> <td>error</td> <td>error</td></tr>");
-
                     console.log(msg);
-
-
-                }
-            });
-
-            // $("#facultyschedules").append("</tbody>");
-
-        }
-
-        function getAcademicYear() {
-
-            $.ajax({
-
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                url: "ClassSchedules.asmx/getAllAcademicYear?facultyID='" + document.getElementById('<%= uid.ClientID%>').value + "'",
-                //url: "ClassSchedules.asmx/getAllAcademicYear",
-                data: "{}",
-                dataType: "json",
-                success: function (msg) {
-
-                    var acadyear = msg.d;
-                    $("#dropdown-menu").removeData();
-
-                    $.each(acadyear, function (index, acad) {
-                        var acadS = acad.name.replace(/ /g, "_");
-                        $("#dropdown-menu").append("<li><a href='#' onClick=displaySchedules('" + acadS + "')>" + acad.name + "</a></li>");
-                    });
-
-                    console.log(msg);
-                },
-
-                error: function (msg) {
-                    $("#dropdown-menu").append("<li> error<li>");
-
-                    console.log(msg);
-
-
                 }
             });
         }
 
+              function getClassLists(selSched) {
+                  $.ajax({
+                      type: "GET",
+                      contentType: "application/json; charset=utf-8",
+                      url: "ClassSchedules.asmx/getStudentLists?scheduleID='" + selSched + "'",
+                      data: "{}",
+                      dataType: "json",
+                      success: function (msg) {
+                          var list = msg.d;
+                          $.each(list, function (index, li) {
+                              $("#studentslists").append("<tr><td>" + li.studentno + "</td> <td>" + li.studentname + "</td> <td>" + li.gender + "</td> <td>" + li.age + "</td> <td> " + li.yearlevel + "</td></tr>");
+                          });
+                          console.log(msg);
+                      },
+
+                      error: function (msg) {
+                          $("#facultyschedules").append("<tr> <td>error</td> <td>error</td> <td>error</td> <td>error</td> <td>error</td></tr>");
+                          console.log(msg);
+                      }
+                  });
+              }
+
+              function getAcademicYear() {
+
+                  $.ajax({
+
+                      type: "GET",
+                      contentType: "application/json; charset=utf-8",
+                      url: "ClassSchedules.asmx/getAllAcademicYear?facultyID='" + document.getElementById('<%= uid.ClientID%>').value + "'",
+                      //url: "ClassSchedules.asmx/getAllAcademicYear",
+                      data: "{}",
+                      dataType: "json",
+                      success: function (msg) {
+
+                          var acadyear = msg.d;
+                          $("#dropdown-menu").removeData();
+
+                          $.each(acadyear, function (index, acad) {
+                              var acadS = acad.name.replace(/ /g, "_");
+                              $("#dropdown-menu").append("<li><a href='#' onClick=displaySchedules('" + acadS + "')>" + acad.name + "</a></li>");
+                          });
+
+                          console.log(msg);
+                      },
+
+                      error: function (msg) {
+                          $("#dropdown-menu").append("<li> error<li>");
+
+                          console.log(msg);
+
+
+                      }
+                  });
+              }
+
+          
 
     </script>
 
@@ -146,7 +159,7 @@
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary"><i class="fa fa-print"></i> Print</button>
-                    <button type="button" class="btn btn-primary"><i class="fa fa-download"></i> Export</button>
+                    <button type="button" class="btn btn-primary" onclick="exportXSL()"><i class="fa fa-download"></i> Export</button>
                     <button id="closelist" type="button" class="btn btn-warning" onclick="closeClassList()"><i class="fa fa-times"></i> Close Students' List</button>
                 </div>
             </div>
@@ -161,6 +174,7 @@
         <div class="col-lg-12">
                         
             <div class="table-responsive">
+            <div id="sch">
               <table id="facultyschedules" class="table table-bordered table-hover table-striped tablesorter">
                 <thead>
                   <tr>
@@ -175,7 +189,8 @@
                  
                 </tbody>
               </table>
-
+            </div>
+            <div id="lst">
                 <table id="studentslists" class="table table-bordered table-hover table-striped tablesorter">
                 <thead>
                   <tr>
@@ -191,7 +206,7 @@
                  
                 </tbody>
               </table>
-
+</div>
             </div>
 
 
@@ -208,5 +223,7 @@
         $("#closelist").hide();
         $("#studentslists").hide();
         getAcademicYear();
+
+
        </script>
 </asp:Content>

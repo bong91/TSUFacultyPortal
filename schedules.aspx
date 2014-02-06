@@ -25,6 +25,13 @@
             clearTable(facultyschedules);
             getSchedules(acad);
         }
+        function test() { alert('hello'); }
+
+        function exportXSL() {
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#clssch').html()));
+            e.preventDefault();
+        }
+
 
         function getSchedules(selSched) {
 
@@ -129,7 +136,8 @@
 
                 <div class="btn-group">
                     <button type="button" class="btn btn-primary"><i class="fa fa-print"></i>Print</button>
-                    <button type="button" class="btn btn-primary"><i class="fa fa-download"></i>Export</button>
+                    <button type="button" class="btn btn-primary" onclick="exportXSL()"><i class="fa fa-download"></i>Export</button>
+
                 </div>
             </div>
         </div>
@@ -142,26 +150,24 @@
 
     <div class="row padup10">
         <div class="col-lg-12">
-
             <div class="table-responsive">
-                <table id="facultyschedules" class="table table-bordered table-hover table-striped tablesorter">
-                    <thead>
-                        <tr>
-                            <th>Subject Code <i class="fa fa-sort"></i></th>
-                            <th>Subject Title <i class="fa fa-sort"></i></th>
-                            <th>Section <i class="fa fa-sort"></i></th>
-                            <th>Room <i class="fa fa-sort"></i></th>
-                            <th>Schedule <i class="fa fa-sort"></i></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                <div id="clssch">
+                    <table id="facultyschedules" class="table table-bordered table-hover table-striped tablesorter">
+                        <thead>
+                            <tr>
+                                <th>Subject Code <i class="fa fa-sort"></i></th>
+                                <th>Subject Title <i class="fa fa-sort"></i></th>
+                                <th>Section <i class="fa fa-sort"></i></th>
+                                <th>Room <i class="fa fa-sort"></i></th>
+                                <th>Schedule <i class="fa fa-sort"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-
         </div>
-
     </div>
     <script type="text/javascript">
         ChangeToClass("schedules");
